@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="kr.or.ddit.case11.objs.mapper.LprodMapper">
+	
+<!-- 	<resultMap type="LprodVO" id="lprodList" autoMapping="true">
+		<collection property="prodList" javaType="List" ofType="ProdVO">
+			<id property="prodId" column="PROD_ID" />
+			<result property="prodName" column="PROD_NAME" />
+		</collection>
+	</resultMap> -->
+	<resultMap type="LprodVO" id="lprodMap" autoMapping="false">
+		<id property="lprodGu" column="GU" />
+		<result property="lprodName" column="LPROD_NAME" />
+		<result property="lprodId" column="LPROD_ID" />
+		<collection property="prodList" ofType="ProdVO" autoMapping="true">
+			<id property="prodId" column="PROD_ID" />
+		</collection>
+	</resultMap>
+	
+	<select id="selectLprodList" resultType="LprodVO">
+		SELECT LPROD_ID, L.LPROD_GU, LPROD_NAME, PROD_ID, PROD_NAME
+		  FROM LPROD L
+		  LEFT OUTER JOIN PROD P ON(P.LPROD_GU = L.LPROD_GU)
+		 ORDER BY LPROD_GU, PROD_ID
+	</select>
+<!-- 
+	<select id="selectLprod" parameterType="String" resultType="LprodVO">
+		SELECT * FROM LPROD WHERE LPROD_GU = #{}
+	</select>
+ -->
+</mapper>
